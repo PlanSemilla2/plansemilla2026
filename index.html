@@ -306,7 +306,7 @@
   <!-- Decisión de ruta (TECH en validación) -->
   <section id="paso-decidir" class="tarjeta estrecha oculto">
     <h2>¿Tu producto o servicio ya funciona?</h2>
-    <p>Tu emprendimiento es de base tecnológica y está en etapa de validación. La Ruta Impulsa Tech es para productos que ya operan: un usuario puede entrar y usar sus funciones principales, en condiciones reales o de prueba. Una idea, un diseño en imágenes o una maqueta que no se puede usar no cuenta como producto desarrollado (numeral 4 de los términos).</p>
+    <p>Tu emprendimiento es de base tecnológica y lo registraste en etapa de ideación o validación. La Ruta Impulsa Tech es para productos que ya operan: un usuario puede entrar y usar sus funciones principales, en condiciones reales o de prueba. Una idea, un diseño en imágenes o una maqueta que no se puede usar no cuenta como producto desarrollado (numeral 4 de los términos).</p>
     <div class="opciones apiladas" role="radiogroup" aria-label="Estado del producto">
       <label class="opcion"><input type="radio" name="funcional" value="si"><span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M8.5 10.5l2.5 2.5 4.5-4.5"/></svg>
@@ -523,7 +523,7 @@
   });
 
   function entrar(r) {
-    Object.assign(S, r, { subiendo: 0 });
+    Object.assign(S, { tipo: '', tipoFijo: false, demo: '' }, r, { subiendo: 0 });
     if (r.decidir) {
       document.querySelectorAll('input[name=funcional]').forEach(x => { x.checked = false; });
       heroTexto('Hola, ' + S.nombre, 'Antes de mostrarte los documentos necesitamos confirmar tu ruta.', true);
@@ -563,7 +563,8 @@
     document.querySelectorAll('.js-anexos').forEach(a => { a.href = S.urlAnexos; });
     document.querySelectorAll('.tam-max').forEach(el => { el.textContent = S.tamMax; });
     const tech = S.ruta === 'IMPULSA';
-    $('#bloque-tipo').classList.toggle('oculto', tech);
+    // Cimienta y Acelera no eligen: el tipo (negocio o idea) viene de la etapa de la inscripción.
+    $('#bloque-tipo').classList.toggle('oculto', tech || !!S.tipoFijo);
     $('#bloque-demo').classList.toggle('oculto', !tech);
     $('#demo').value = S.demo || '';
     document.querySelectorAll('input[name=tipo]').forEach(r => { r.checked = r.value === S.tipo; });
@@ -768,9 +769,9 @@
         anexo4: 'anexo-4-madre-padre-cabeza-de-hogar.pdf', anexo7: 'anexo-7-ficha-tecnica-impulsa-tech.pdf', anexo8: 'anexo-8-ficha-idea-de-negocio.pdf' })[a[0]] ? 'https://plansemilla2.github.io/plansemilla2026/' + ({ anexo1: 'anexo-1-declaracion-juramentada.pdf', anexo2: 'anexo-2-carta-de-compromiso.pdf', anexo3: 'anexo-3-tratamiento-de-datos.pdf',
         anexo4: 'anexo-4-madre-padre-cabeza-de-hogar.pdf', anexo7: 'anexo-7-ficha-tecnica-impulsa-tech.pdf', anexo8: 'anexo-8-ficha-idea-de-negocio.pdf' })[a[0]] : '' }));
     const BASE = {
-      '1234567890': { nombre: 'María G. P.', ruta: 'CIMIENTA', etiqueta: 'Ruta Cimienta' },
+      '1234567890': { nombre: 'María G. P.', ruta: 'CIMIENTA', etiqueta: 'Ruta Cimienta', tipo: 'negocio' },
       '1111111111': { nombre: 'Andrés M.', ruta: 'IMPULSA', etiqueta: 'Ruta Impulsa Tech' },
-      '2222222222': { nombre: 'Laura R.', ruta: 'PREGUNTAR', etiqueta: '' }
+      '2222222222': { nombre: 'Laura R.', ruta: 'PREGUNTAR', etiqueta: '', tipo: 'idea' }
     };
     const ETQ = { CIMIENTA: 'Ruta Cimienta', IMPULSA: 'Ruta Impulsa Tech' };
     const cargas = {};
@@ -792,7 +793,8 @@
         if (!b) return { ok: false, mensaje: 'Con este número de documento no existe un registro en la base de datos de inscritos. Revisa el número e intenta de nuevo.' };
         if (b.ruta === 'PREGUNTAR') return { ok: true, decidir: true, cedula: c, nombre: b.nombre };
         return { ok: true, cedula: c, nombre: b.nombre, ruta: b.ruta, rutaEtiqueta: b.etiqueta, documentos: docs(b.ruta),
-          cargados: Object.assign({}, cargas[c] || {}), tipo: '', demo: '', urlAnexos: '#', tamMax: 10 };
+          tipo: b.ruta !== 'IMPULSA' ? (b.tipo || '') : '', tipoFijo: b.ruta !== 'IMPULSA' && !!b.tipo,
+          cargados: Object.assign({}, cargas[c] || {}), demo: '', urlAnexos: '#', tamMax: 10 };
       },
       definirRuta(p) {
         const b = BASE[p.cedula];
