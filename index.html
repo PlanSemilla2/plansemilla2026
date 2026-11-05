@@ -6,6 +6,8 @@
 <meta name="theme-color" content="#0E2240">
 <meta name="description" content="Carga de documentos de la convocatoria Plan Semilla 2026. Alcaldía de Barranquilla y Cámara de Comercio de Barranquilla.">
 <title>Plan Semilla 2026: carga de documentos</title>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
@@ -97,6 +99,16 @@
   .btn.sec:hover { border-color: var(--brand); filter: none; }
   .alerta { padding: .875rem 1rem; border-radius: 12px; margin-top: 1rem; background: var(--err-bg); color: var(--err); }
   .ayuda-ingreso { margin: 1.25rem 0 0; font-size: .9375rem; color: var(--muted); }
+  .acepto { display: grid; grid-template-columns: auto 1fr; gap: .75rem; align-items: start; margin-top: 1.125rem; padding: .875rem 1rem;
+    border: 1.5px solid var(--line); border-radius: 12px; background: var(--surface-2); font-size: .875rem; line-height: 1.5; color: var(--muted); cursor: pointer; }
+  .acepto input { width: 1.25rem; height: 1.25rem; margin: .125rem 0 0; accent-color: var(--brand); cursor: pointer; }
+  .acepto a { color: var(--brand); font-weight: 700; }
+  .acepto.falta { border-color: var(--err); background: var(--err-bg); }
+  .formatos { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 1rem; }
+  .formatos a, .doc .formato { display: inline-flex; align-items: center; gap: .375rem; font-size: .875rem; font-weight: 700; color: var(--brand);
+    text-decoration: none; padding: .375rem .75rem; border-radius: 999px; background: rgba(54,160,220,.12); }
+  .formatos a:hover, .doc .formato:hover { background: rgba(54,160,220,.22); }
+  .doc .formato { margin-top: .5rem; }
   .ingreso { display: grid; grid-template-columns: minmax(0, 32rem) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
   .preparar ul { list-style: none; margin: 0 0 1.25rem; padding: 0; }
   .preparar li { display: flex; gap: .75rem; padding: .625rem 0; border-top: 1px solid var(--line); }
@@ -247,6 +259,10 @@
     <form id="form-ingreso" novalidate>
       <label class="campo" for="cedula">Número de cédula</label>
       <input id="cedula" class="entrada ced" inputmode="numeric" autocomplete="off" placeholder="1234567890" required>
+      <label class="acepto" for="acepto">
+        <input type="checkbox" id="acepto">
+        <span>Acepto el tratamiento de mis datos personales y de los documentos que cargue, para los fines de la convocatoria Plan Semilla 2026, de acuerdo con la <a href="https://prod.camarabaq.org.co/wp-content/uploads/2023/07/POLITICA-DE-PRIVACIDAD-DE-DATOS-PERSONALES-ccb.pdf" target="_blank" rel="noopener">Política de privacidad y tratamiento de datos personales de la Cámara de Comercio de Barranquilla</a>.</span>
+      </label>
       <button id="btn-ingresar" class="btn ancho" type="submit">Ingresar</button>
     </form>
     <div id="error-ingreso" class="alerta oculto" role="alert"></div>
@@ -263,7 +279,16 @@
       <li>Si aplicas a Impulsa Tech: certificado de existencia o RUT, Anexo 7 y el enlace a tu demo</li>
       <li>Opcional: soportes de los criterios de priorización, como Sisbén, RUV o Anexo 4</li>
     </ul>
-    <p class="preparar-pie">Los formatos de los anexos están en los términos de la convocatoria. Para acceder a los anexos <a class="js-anexos" href="#" target="_blank" rel="noopener">presiona aquí</a>.</p>
+    <p class="preparar-pie">Descarga los formatos:</p>
+    <div class="formatos">
+      <a href="https://plansemilla2.github.io/plansemilla2026/anexo-1-declaracion-juramentada.pdf" target="_blank" rel="noopener">Anexo 1</a>
+      <a href="https://plansemilla2.github.io/plansemilla2026/anexo-2-carta-de-compromiso.pdf" target="_blank" rel="noopener">Anexo 2</a>
+      <a href="https://plansemilla2.github.io/plansemilla2026/anexo-3-tratamiento-de-datos.pdf" target="_blank" rel="noopener">Anexo 3</a>
+      <a href="https://plansemilla2.github.io/plansemilla2026/anexo-4-madre-padre-cabeza-de-hogar.pdf" target="_blank" rel="noopener">Anexo 4</a>
+      <a href="https://plansemilla2.github.io/plansemilla2026/anexo-7-ficha-tecnica-impulsa-tech.pdf" target="_blank" rel="noopener">Anexo 7</a>
+      <a href="https://plansemilla2.github.io/plansemilla2026/anexo-8-ficha-idea-de-negocio.pdf" target="_blank" rel="noopener">Anexo 8</a>
+    </div>
+    <p class="preparar-pie">¿Quieres leer toda la convocatoria? <a class="js-anexos" href="https://plansemilla2.github.io/plansemilla2026/terminos-y-condiciones-plan-semilla-2026.pdf" target="_blank" rel="noopener">Consulta los términos completos aquí</a>.</p>
   </aside>
   </div>
 
@@ -311,7 +336,7 @@
     <div class="contenido">
       <div class="anexos">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
-        <p>Los formatos de los anexos están en los términos de la convocatoria. Descárgalos, diligéncialos, fírmalos y cárgalos en PDF. Para acceder a los anexos <a class="js-anexos" href="#" target="_blank" rel="noopener">presiona aquí</a>.</p>
+        <p>Cada anexo tiene su botón <b>Descargar formato</b> junto al documento: descárgalo, diligéncialo, fírmalo y cárgalo en PDF. Si quieres leer toda la convocatoria, <a class="js-anexos" href="https://plansemilla2.github.io/plansemilla2026/terminos-y-condiciones-plan-semilla-2026.pdf" target="_blank" rel="noopener">consulta los términos completos aquí</a>.</p>
       </div>
 
       <div id="bloque-tipo" class="bloque tarjeta">
@@ -392,7 +417,22 @@
   };
 
   // ---------- servidor ----------
-  function api(fn, arg) {
+  // Si el servidor está muy ocupado (muchas personas a la vez), se reintenta solo con esperas crecientes.
+  const ESPERAS = [1500, 3500, 7000, 12000];
+  async function api(fn, arg, alReintentar) {
+    for (let i = 0; ; i++) {
+      try {
+        const r = await llamar(fn, arg);
+        if (r && r.reintentar && i < ESPERAS.length) throw new Error('ocupado');
+        return r;
+      } catch (e) {
+        if (i >= ESPERAS.length) throw new Error('Hay muchas personas conectadas en este momento. Espera un minuto e inténtalo de nuevo.');
+        if (alReintentar) alReintentar(i + 1);
+        await new Promise(res => setTimeout(res, ESPERAS[i] + Math.random() * 1000));
+      }
+    }
+  }
+  function llamar(fn, arg) {
     if (USAR_API) {
       return fetch(API_URL.trim(), {
         method: 'POST', redirect: 'follow', credentials: 'omit',
@@ -455,6 +495,7 @@
   }
 
   // ---------- ingreso ----------
+  $('#acepto').addEventListener('change', () => { $('.acepto').classList.remove('falta'); if ($('#acepto').checked) $('#error-ingreso').classList.add('oculto'); });
   $('#form-ingreso').addEventListener('submit', async ev => {
     ev.preventDefault();
     if (cerrado) return;
@@ -462,10 +503,15 @@
     const err = $('#error-ingreso');
     err.classList.add('oculto');
     if (!valor) { mostrarError(err, 'Escribe tu número de cédula.'); return; }
+    if (!$('#acepto').checked) {
+      $('.acepto').classList.add('falta');
+      mostrarError(err, 'Para continuar debes aceptar el tratamiento de tus datos personales.');
+      return;
+    }
     const btn = $('#btn-ingresar');
     btn.disabled = true; btn.textContent = 'Validando…';
     try {
-      const r = await api('validarCedula', valor);
+      const r = await api('validarCedula', { cedula: valor, acepto: true }, () => { btn.textContent = 'Hay mucha demanda, reintentando…'; });
       if (r.cerrado) { mostrarCerrado(r.mensaje); return; }
       if (!r.ok) { mostrarError(err, r.mensaje); return; }
       entrar(r);
@@ -500,7 +546,7 @@
     const btn = $('#btn-decidir');
     btn.disabled = true; btn.textContent = 'Confirmando…';
     try {
-      const r = await api('definirRuta', { cedula: S.cedula, funcional: elegido.value });
+      const r = await api('definirRuta', { cedula: S.cedula, funcional: elegido.value, acepto: true });
       if (r.cerrado) { mostrarCerrado(r.mensaje); return; }
       if (!r.ok) { mostrarError(err, r.mensaje); return; }
       entrar(r);
@@ -541,6 +587,13 @@
       '<button type="button" class="btn sec"></button><input type="file" accept="application/pdf,.pdf">';
     li.querySelector('.nombre').textContent = d.nombre;
     li.querySelector('.ayuda').textContent = d.ayuda;
+    if (d.formato) {
+      const a = document.createElement('a');
+      a.className = 'formato'; a.href = d.formato; a.target = '_blank'; a.rel = 'noopener';
+      a.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>';
+      a.appendChild(document.createTextNode('Descargar formato del ' + d.nombre.split('.')[0]));
+      li.querySelector('.estado').before(a);
+    }
     const input = li.querySelector('input'), btn = li.querySelector('button');
     input.setAttribute('aria-label', 'Elegir PDF para ' + d.nombre);
     btn.addEventListener('click', () => input.click());
@@ -578,7 +631,8 @@
     marcar(d.id, 'subiendo', 'Subiendo ' + f.name + '…');
     try {
       const base64 = await leerBase64(f);
-      const r = await api('subirArchivo', { cedula: S.cedula, docId: d.id, tipo: S.tipo, nombreArchivo: f.name, base64: base64 });
+      const r = await api('subirArchivo', { cedula: S.cedula, docId: d.id, tipo: S.tipo, nombreArchivo: f.name, base64: base64, acepto: true },
+        () => marcar(d.id, 'subiendo', 'Hay mucha demanda en este momento, reintentando…'));
       if (r.cerrado) { mostrarCerrado(r.mensaje); return; }
       if (!r.ok) throw new Error(r.mensaje);
       S.cargados[d.id] = true;
@@ -643,7 +697,7 @@
     const botones = document.querySelectorAll('.js-enviar');
     botones.forEach(b => { b.disabled = true; b.dataset.t = b.textContent; b.textContent = 'Enviando…'; });
     try {
-      const r = await api('finalizar', { cedula: S.cedula, tipo: S.tipo, demo: S.demo });
+      const r = await api('finalizar', { cedula: S.cedula, tipo: S.tipo, demo: S.demo, acepto: true });
       if (r.cerrado) { mostrarCerrado(r.mensaje); return; }
       if (!r.ok) { aviso(r.mensaje); return; }
       mostrarResultado(r);
@@ -709,7 +763,10 @@
       ['sisben', 'Certificado del Sisbén', 'Certificado vigente en grupo A o B, descargado de la plataforma oficial del DNP.', 'no', 'prioridad', L],
       ['discapacidad', 'Certificado de discapacidad', 'Certificado médico o documento oficial que acredite la condición de discapacidad.', 'no', 'prioridad', L],
       ['capacitaciones', 'Certificados de capacitaciones', 'Certificados o constancias de capacitaciones previas con entidades aliadas, en un solo PDF.', 'no', 'prioridad', L]
-    ].map(a => ({ id: a[0], nombre: a[1], ayuda: a[2], requiere: a[3], grupo: a[4], rutas: a[5] }));
+    ].map(a => ({ id: a[0], nombre: a[1], ayuda: a[2], requiere: a[3], grupo: a[4], rutas: a[5],
+      formato: ({ anexo1: 'anexo-1-declaracion-juramentada.pdf', anexo2: 'anexo-2-carta-de-compromiso.pdf', anexo3: 'anexo-3-tratamiento-de-datos.pdf',
+        anexo4: 'anexo-4-madre-padre-cabeza-de-hogar.pdf', anexo7: 'anexo-7-ficha-tecnica-impulsa-tech.pdf', anexo8: 'anexo-8-ficha-idea-de-negocio.pdf' })[a[0]] ? 'https://plansemilla2.github.io/plansemilla2026/' + ({ anexo1: 'anexo-1-declaracion-juramentada.pdf', anexo2: 'anexo-2-carta-de-compromiso.pdf', anexo3: 'anexo-3-tratamiento-de-datos.pdf',
+        anexo4: 'anexo-4-madre-padre-cabeza-de-hogar.pdf', anexo7: 'anexo-7-ficha-tecnica-impulsa-tech.pdf', anexo8: 'anexo-8-ficha-idea-de-negocio.pdf' })[a[0]] : '' }));
     const BASE = {
       '1234567890': { nombre: 'María G. P.', ruta: 'CIMIENTA', etiqueta: 'Ruta Cimienta' },
       '1111111111': { nombre: 'Andrés M.', ruta: 'IMPULSA', etiqueta: 'Ruta Impulsa Tech' },
@@ -729,7 +786,8 @@
         const txt = dias[f.getDay()] + ' ' + f.getDate() + ' de ' + meses[f.getMonth()] + ' de ' + f.getFullYear() + ' a las 11:59 p. m.';
         return { cerrado: this.cerrar, limiteMs: limite, ahoraMs: Date.now(), fechaTexto: txt, contacto: 'correo-de-soporte@ejemplo.co' };
       },
-      validarCedula(c) {
+      validarCedula(arg) {
+        const c = arg && typeof arg === 'object' ? arg.cedula : arg;
         const b = BASE[c];
         if (!b) return { ok: false, mensaje: 'Con este número de documento no existe un registro en la base de datos de inscritos. Revisa el número e intenta de nuevo.' };
         if (b.ruta === 'PREGUNTAR') return { ok: true, decidir: true, cedula: c, nombre: b.nombre };
@@ -739,7 +797,7 @@
       definirRuta(p) {
         const b = BASE[p.cedula];
         if (b.ruta === 'PREGUNTAR') { b.ruta = p.funcional === 'si' ? 'IMPULSA' : 'CIMIENTA'; b.etiqueta = ETQ[b.ruta]; }
-        return this.validarCedula(p.cedula);
+        return this.validarCedula({ cedula: p.cedula, acepto: true });
       },
       subirArchivo(p) { (cargas[p.cedula] = cargas[p.cedula] || {})[p.docId] = true; return { ok: true }; },
       finalizar(p) {
